@@ -542,7 +542,6 @@ nvm_process_nvmrc() {
     nvm_nvmrc_invalid_msg "${lines}"
     return 1
   fi
-
   # Initialize key-value storage
   local keys
   keys=''
@@ -4657,6 +4656,53 @@ nvm_process_parameters() {
   nvm_auto "${NVM_AUTO_MODE}"
 }
 
-nvm_process_parameters "$@"
-
 } # this ensures the entire script is downloaded #
+
+_nvm_init_wrapper() {
+  # Emulate normal startup behavior
+  if [ ! -v __NVM_ZSH_INIT_WRAPPER ]; then
+    nvm "$@" >&2
+  else
+    nvm_process_parameters "$@" >&2
+  fi
+
+  # Check for specific modes
+  case "$1" in
+    deactivate)
+      echo "unset NVM_BIN NVM_INC"
+      return
+      ;;
+    unload)
+      echo "unset unset NVM_BIN NVM_INC NVM_COLORS NVM_CD_FLAGS NVM_RC_VERSION"
+      return
+      ;;
+    set-colors)
+      printf "export NVM_COLORS='%s'\n" "$NVM_COLORS"
+      return
+      ;;
+  esac
+
+  # Support for MODIFY_PATH
+  if [ -v NVM_BIN ]; then
+    _NVM_WRAPPER_PATH="$PATH"
+    _NVM_WRAPPER_DEFAULT_PATH="$(nvm_strip_path "$PATH" "/bin")"
+  fi
+
+  # Return environment update
+  printf "local NEW_PATH='%s'\n" "$_NVM_WRAPPER_PATH"
+  printf "local DEFAULT_PATH='%s'\n" "$_NVM_WRAPPER_DEFAULT_PATH"
+  printf "export NVM_BIN='%s'\n" "$NVM_BIN"
+  printf "export NVM_INC='%s'\n" "$NVM_INC"
+  printf "export NVM_CD_FLAGS='%s'\n" "$NVM_CD_FLAGS"
+  printf "export NVM_RC_VERSION='%s'\n" "$NVM_RC_VERSION"
+  printf "export NODE_PATH='%s'\n" "$NODE_PATH"
+
+  [ -z "$NVM_RC_VERSION" ] && echo "unset NVM_RC_VERSION"
+  [ -z "$NODE_PATH" ] && echo "unset NODE_PATH"
+}
+
+if $__NVM_ZSH_USES_WRAPPER; then
+  _nvm_init_wrapper "$@"
+else
+  nvm_process_parameters "$@"
+fi
