@@ -4,6 +4,7 @@
 NVM_DIR="${NVM_DIR:-$XDG_DATA_HOME/nvm}"
 NVM_ZSH_DISABLE_ISOLATION=false
 NVM_ZSH_MODIFY_PATH=false
+__NVM_WRAPPER_INSTALL_PATH="${__NVM_WRAPPER_INSTALL_PATH:-$XDG_CONFIG_HOME/zsh/nvm.zsh}"
 
 __NVM_HOME_DIR="$HOME"
 $NVM_DISABLE_ISOLATION && __NVM_HOME_DIR="$NVM_DIR/home"
@@ -34,7 +35,7 @@ nvm-update() {
 
   # Download nvm.zsh
   printf ":: Updating nvim.zsh installation... "
-  if curl -L --silent "$NVM_WRAPPER_URL" > "${0:a}"; then
+  if curl -L --silent "$NVM_WRAPPER_URL" > "$__NVM_WRAPPER_INSTALL_PATH"; then
     echo "Done"
   else
     printf "\n:: Error updating nvm.zsh"
