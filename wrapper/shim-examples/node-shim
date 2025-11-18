@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Inherit nvm isolation
+
+export HOME="$__NVM_HOME"
+export XDG_CONFIG_HOME="$__NVM_CONFIG_DIR"
+export XDG_CACHE_HOME="$__NVM_CACHE_DIR"
+export COREPACK_HOME="$HOME/corepack"
+
+PROGNAME="$(basename "${BASH_SOURCE[0]}")"
+
+exec "$NVM_BIN/$PROGNAME" "$@"
