@@ -15,8 +15,8 @@ __NVM_ZSH_USES_WRAPPER=true
 
 # Update and ensure nvm.sh is installed
 nvm-update() {
-  local NVM_ZSH_UPDATE_URL="https://github.com/LnxFCA/nvm-zsh/raw/refs/heads/upstream/nvm.sh"
-  local NVM_WRAPPER_URL="https://github.com/LnxFCA/nvm-zsh/raw/refs/heads/upstream/wrappers/nvm.zsh"
+  local NVM_ZSH_UPDATE_URL="https://github.com/LnxFCA/nvm-zsh/raw/refs/heads/main/nvm.sh"
+  local NVM_WRAPPER_URL="https://github.com/LnxFCA/nvm-zsh/raw/refs/heads/main/wrapper/nvm.zsh"
   local NVM_ZSH_INSTALL_PATH="$NVM_DIR/nvm.sh"
 
   [ ! -d "$NVM_DIR" ] && mkdir -p "$NVM_DIR"
