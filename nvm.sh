@@ -4656,8 +4656,6 @@ nvm_process_parameters() {
   nvm_auto "${NVM_AUTO_MODE}"
 }
 
-} # this ensures the entire script is downloaded #
-
 _nvm_init_wrapper() {
   # Emulate normal startup behavior
   if [ ! -v __NVM_EXT_INIT_WRAPPER ]; then
@@ -4706,3 +4704,5 @@ if $__NVM_EXT_USES_WRAPPER; then
 else
   nvm_process_parameters "$@"
 fi
+
+} # this ensures the entire script is downloaded #
