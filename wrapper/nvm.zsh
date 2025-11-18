@@ -89,4 +89,13 @@ export __NVM_CACHE_DIR
 # Initial run
 nvm
 
+# zsh hook
+autoload -U add-zsh-hook
+__nvm_auto_use_hook() {
+  [ -f .nvmrc ] && nvm use
+}
+
+add-zsh-hook chpwd __nvm_auto_use_hook
+__nvm_auto_use_hook
+
 unset __NVM_EXT_INIT_WRAPPER
