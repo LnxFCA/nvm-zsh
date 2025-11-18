@@ -4,10 +4,10 @@
 NVM_DIR="${NVM_DIR:-$XDG_DATA_HOME/nvm}"
 NVM_EXT_DISABLE_ISOLATION=false
 NVM_EXT_MODIFY_PATH=false
-__NVM_WRAPPER_INSTALL_PATH="${__NVM_WRAPPER_INSTALL_PATH:-$XDG_CONFIG_HOME/zsh/nvm.zsh}"
+__NVM_EXT_WRAPPER_DIR="${__NVM_EXT_WRAPPER_DIR:-$XDG_CONFIG_HOME/zsh/nvm.zsh}"
 
 __NVM_HOME_DIR="$HOME"
-$NVM_DISABLE_ISOLATION && __NVM_HOME_DIR="$NVM_DIR/home"
+$NVM_EXT_DISABLE_ISOLATION && __NVM_HOME_DIR="$NVM_DIR/home"
 __NVM_CONFIG_DIR="$__NVM_HOME_DIR/.cache"
 __NVM_CACHE_DIR="$__NVM_HOME_DIR/.cache"
 
@@ -17,16 +17,16 @@ __NVM_EXT_USES_WRAPPER=true
 # Update and ensure nvm.sh is installed
 nvm-update() {
   local NVM_EXT_UPDATE_URL="https://github.com/LnxFCA/nvm-ext/raw/refs/heads/main/nvm.sh"
-  local NVM_WRAPPER_URL="https://github.com/LnxFCA/nvm-ext/raw/refs/heads/main/wrapper/nvm.zsh"
+  local NVM_EXT_WRAPPER_URL="https://github.com/LnxFCA/nvm-ext/raw/refs/heads/main/wrapper/nvm.zsh"
   local NVM_EXT_INSTALL_PATH="$NVM_DIR/nvm.sh"
 
   [ ! -d "$NVM_DIR" ] && mkdir -p "$NVM_DIR"
-  [ -f "$NVM_EXT_INSTALL_PATH" ] && rm "$NVM_ZSH_INSTALL_PATH"
+  [ -f "$NVM_EXT_INSTALL_PATH" ] && rm "$NVM_EXT_INSTALL_PATH"
 
   # Download nvm.sh
   printf ":: Updating nvm.sh installation... "
 
-  if curl -L --silent "$NVM_EXT_UPDATE_URL" > "$NVM_ZSH_INSTALL_PATH"; then
+  if curl -L --silent "$NVM_EXT_UPDATE_URL" > "$NVM_EXT_INSTALL_PATH"; then
     chmod +x "$NVM_EXT_INSTALL_PATH"
     echo "Done"
   else
@@ -35,7 +35,7 @@ nvm-update() {
 
   # Download nvm.zsh
   printf ":: Updating nvim.zsh installation... "
-  if curl -L --silent "$NVM_WRAPPER_URL" > "$__NVM_WRAPPER_INSTALL_PATH"; then
+  if curl -L --silent "$NVM_EXT_WRAPPER_URL" > "$__NVM_EXT_WRAPPER_DIR"; then
     echo "Done"
   else
     printf "\n:: Error updating nvm.zsh"
