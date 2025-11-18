@@ -88,4 +88,4 @@ export __NVM_CACHE_DIR
 # Initial run
 nvm
 
-unset __NVM_INIT
+unset __NVM_ZSH_INIT_WRAPPER
