@@ -6,8 +6,8 @@ NVM_EXT_DISABLE_ISOLATION=false
 NVM_EXT_MODIFY_PATH=false
 __NVM_EXT_WRAPPER_DIR="${__NVM_EXT_WRAPPER_DIR:-$XDG_CONFIG_HOME/zsh/nvm.zsh}"
 
-__NVM_HOME_DIR="$HOME"
-$NVM_EXT_DISABLE_ISOLATION && __NVM_HOME_DIR="$NVM_DIR/home"
+__NVM_HOME_DIR="$NVM_DIR/home"
+$NVM_EXT_DISABLE_ISOLATION && __NVM_HOME_DIR="$HOME"
 __NVM_CONFIG_DIR="$__NVM_HOME_DIR/.cache"
 __NVM_CACHE_DIR="$__NVM_HOME_DIR/.cache"
 
@@ -47,15 +47,15 @@ nvm-update() {
 nvm() {
   # Setup isolation
   local HOME="${NVM_HOME_DIR:-$__NVM_HOME_DIR}"
-  local XDG_CONFIG_HOME="${NVM_CONFIG_HOME:-$HOME/.config}"
-  local XDG_CACHE_HOME="${NVM_CACHE_HOME:-$HOME/.cache}"
+  local XDG_CONFIG_HOME="${NVM_CONFIG_HOME:-$__NVM_CONFIG_DIR}"
+  local XDG_CACHE_HOME="${NVM_CACHE_HOME:-$__NVM_CACHE_DIR}"
 
   # Don't save custom paths
-  if [ ! $NVM_EXT_DISABLE_ISOLATION ]; then
-  __NVM_HOME_DIR="$HOME"
-  __NVM_CONFIG_DIR="$XDG_CONFIG_HOME"
-  __NVM_CACHE_DIR="$XDG_CACHE_HOME"
-  fi
+  # if [ ! $NVM_EXT_DISABLE_ISOLATION ]; then
+  # __NVM_HOME_DIR="$HOME"
+  # __NVM_CONFIG_DIR="$XDG_CONFIG_HOME"
+  # __NVM_CACHE_DIR="$XDG_CACHE_HOME"
+  # fi
 
   [ ! -a "$HOME" ] && mkdir -p "$HOME"
   [ ! -a "$XDG_CONFIG_HOME" ] && mkdir -p "$XDG_CONFIG_HOME"
