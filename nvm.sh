@@ -4660,7 +4660,7 @@ nvm_process_parameters() {
 
 _nvm_init_wrapper() {
   # Emulate normal startup behavior
-  if [ ! -v __NVM_ZSH_INIT_WRAPPER ]; then
+  if [ ! -v __NVM_EXT_INIT_WRAPPER ]; then
     nvm "$@" >&2
   else
     nvm_process_parameters "$@" >&2
@@ -4701,7 +4701,7 @@ _nvm_init_wrapper() {
   [ -z "$NODE_PATH" ] && echo "unset NODE_PATH"
 }
 
-if $__NVM_ZSH_USES_WRAPPER; then
+if $__NVM_EXT_USES_WRAPPER; then
   _nvm_init_wrapper "$@"
 else
   nvm_process_parameters "$@"
