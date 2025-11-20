@@ -4658,7 +4658,7 @@ nvm_process_parameters() {
 
 _nvm_init_wrapper() {
   # Emulate normal startup behavior
-  if [ ! -v __NVM_EXT_INIT_WRAPPER ]; then
+  if [ ! -n "${__NVM_EXT_INIT_WRAPPER+set}" ]; then
     nvm "$@" >&2
   else
     nvm_process_parameters "$@" >&2
@@ -4681,7 +4681,7 @@ _nvm_init_wrapper() {
   esac
 
   # Support for MODIFY_PATH
-  if [ -v NVM_BIN ]; then
+  if [ -n "${NVM_BIN+set}" ]; then
     _NVM_WRAPPER_PATH="$PATH"
     _NVM_WRAPPER_DEFAULT_PATH="$(nvm_strip_path "$PATH" "/bin")"
   fi
